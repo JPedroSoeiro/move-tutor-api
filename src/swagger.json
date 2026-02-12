@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Move Tutor API",
+    "description": "Documentação da rede social de times Pokémon",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Servidor Local"
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["Autenticação"],
+        "summary": "Cadastrar novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "fullName": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Criado" } }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Autenticação"],
+        "summary": "Realizar login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Sucesso" } }
+      }
+    },
+    "/teams/save": {
+      "post": {
+        "tags": ["Times"],
+        "summary": "Salvar um novo time",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "string", "format": "uuid" },
+                  "teamName": { "type": "string" },
+                  "pokemons": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "ability": { "type": "string" },
+                        "item": { "type": "string" },
+                        "nature": { "type": "string" },
+                        "moves": { "type": "array", "items": { "type": "string" } },
+                        "is_shiny": { "type": "boolean" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Time salvo" } }
+      }
+    },
+    "/teams/feed": {
+      "get": {
+        "tags": ["Times"],
+        "summary": "Listar todos os times (Feed)",
+        "responses": { "200": { "description": "Lista de times" } }
+      }
+    }
+  }
+}
